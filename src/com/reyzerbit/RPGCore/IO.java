@@ -57,6 +57,7 @@ public class IO {
 				tempCharSection.set("height", rpgChar.getHeight());
 				tempCharSection.set("bodytype", rpgChar.getBodytype());
 				tempCharSection.set("hometown", rpgChar.getHometown());
+				tempCharSection.set("description", rpgChar.getDescription());
 				
 			}
 			
@@ -129,8 +130,20 @@ public class IO {
        			ConfigurationSection tempConfigSec = tempConfig.getConfigurationSection("characters." + s);
        			
        			//And add new character to tempPlayer based on each character config section's data
-       			tempPlayer.addCharacter(new RPGCharacter(tempConfigSec.getString("id"), tempConfigSec.getString("name"), tempConfigSec.getString("race"), tempConfigSec.getString("class"),
-       					tempConfigSec.getInt("age"), tempConfigSec.getInt("height"), tempConfigSec.getString("bodytype"), tempConfigSec.getString("hometown")));
+       			RPGCharacter tempCharacter = new RPGCharacter();
+       			
+       			checkNullString(tempConfigSec, "id", tempCharacter, tempConfigSec.getString("id"));
+       			checkNullString(tempConfigSec, "name", tempCharacter, tempConfigSec.getString("name"));
+       			checkNullString(tempConfigSec, "race", tempCharacter, tempConfigSec.getString("race"));
+       			checkNullString(tempConfigSec, "class", tempCharacter, tempConfigSec.getString("class"));
+       			checkNullString(tempConfigSec, "bodytype", tempCharacter, tempConfigSec.getString("bodytype"));
+       			checkNullString(tempConfigSec, "hometown", tempCharacter, tempConfigSec.getString("hometown"));
+       			checkNullString(tempConfigSec, "description", tempCharacter, tempConfigSec.getString("description"));
+       			
+       			checkNullInt(tempConfigSec, "description", tempCharacter, tempConfigSec.getInt("age"));
+       			checkNullInt(tempConfigSec, "description", tempCharacter, tempConfigSec.getInt("height"));
+       			
+       			tempPlayer.addCharacter(tempCharacter);
 
        		}
        		
@@ -140,6 +153,80 @@ public class IO {
        		Main.playerData.put(tempUUID, tempPlayer);
        		
        	}
+		
+	}
+	
+	private static void checkNullString(ConfigurationSection cs, String key, RPGCharacter c, String s) {
+		
+		if(cs.getString(key) != null) {
+			
+			switch(key) {
+				case "id":
+					c.setCharacterID(s);
+					break;
+				case "name" :
+					c.setName(s);
+					break;
+				case "race":
+					c.setRace(s);
+					break;
+				case "class":
+					c.setPClass(s);
+					break;
+				case "bodytype":
+					c.setBodytype(s);
+					break;
+				case "hometown":
+					c.setHometown(s);
+					break;
+				case "description":
+					c.setDescription(s);
+					break;
+					
+			}
+					
+					
+		} else {
+			
+			switch(key) {
+			case "id":
+				c.setCharacterID("");
+				break;
+			case "name" :
+				c.setName("");
+				break;
+			case "race":
+				c.setRace("");
+				break;
+			case "class":
+				c.setPClass("");
+				break;
+			case "bodytype":
+				c.setBodytype("");
+				break;
+			case "hometown":
+				c.setHometown("");
+				break;
+			case "description":
+				c.setDescription("");
+				break;
+				
+		}
+			
+		}
+		
+	}
+	
+	private static void checkNullInt(ConfigurationSection cs, String key, RPGCharacter c, int i) {
+			
+		switch(key) {
+			case "age":
+				c.setAge(i);
+				break;
+			case "height" :
+				c.setHeight(i);
+				break;
+		}
 		
 	}
 

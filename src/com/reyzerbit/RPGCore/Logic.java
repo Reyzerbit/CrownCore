@@ -1,11 +1,13 @@
 package com.reyzerbit.RPGCore;
 
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.ChatPaginator;
 
 import com.reyzerbit.RPGCore.DataStructures.RPGCharacter;
 import com.reyzerbit.RPGCore.DataStructures.RPGPlayer;
@@ -115,26 +117,18 @@ public class Logic {
 		}
 	
 		//Checks age
-		if(Main.minAge != 0 && Main.maxAge != 0) {
-			
-			if(Integer.parseInt(args[5]) < Main.minAge || Integer.parseInt(args[5]) > Main.maxAge) {
+		if(!checkAge(args[5])) {
 				
-				sender.sendMessage(ChatColor.RED + "That age is not available on this server!");
-				return false;
-				
-			}
+			sender.sendMessage(ChatColor.RED + "That age is not available on this server!");
+			return false;
 			
 		}
 		
 		//Checks height
-		if(Main.minHeight != 0 && Main.maxHeight != 0) {
+		if(!checkHeight(args[6])) {
 			
-			if(Integer.parseInt(args[6]) < Main.minHeight || Integer.parseInt(args[6]) > Main.maxHeight) {
-				
-				sender.sendMessage(ChatColor.RED + "That height is not available on this server!");
-				return false;
-				
-			}
+			sender.sendMessage(ChatColor.RED + "That height is not available on this server!");
+			return false;
 			
 		}
 		
@@ -199,26 +193,18 @@ public class Logic {
 		}
 	
 		//Checks age
-		if(Main.minAge != 0 && Main.maxAge != 0) {
-			
-			if(Integer.parseInt(args[6]) < Main.minAge || Integer.parseInt(args[6]) > Main.maxAge) {
+		if(!checkAge(args[6])) {
 				
-				sender.sendMessage(ChatColor.RED + "That age is not available on this server!");
-				return false;
-				
-			}
+			sender.sendMessage(ChatColor.RED + "That age is not available on this server!");
+			return false;
 			
 		}
 		
 		//Checks height
-		if(Main.minHeight != 0 && Main.maxHeight != 0) {
+		if(!checkHeight(args[7])) {
 			
-			if(Integer.parseInt(args[7]) < Main.minHeight || Integer.parseInt(args[7]) > Main.maxHeight) {
-				
-				sender.sendMessage(ChatColor.RED + "That height is not available on this server!");
-				return false;
-				
-			}
+			sender.sendMessage(ChatColor.RED + "That height is not available on this server!");
+			return false;
 			
 		}
 		
@@ -434,7 +420,14 @@ public class Logic {
 			sender.sendMessage(ChatColor.AQUA + "Bodytype: " + ChatColor.LIGHT_PURPLE + pc.getBodytype());
 			sender.sendMessage(ChatColor.AQUA + "Hometown: " + ChatColor.LIGHT_PURPLE + pc.getHometown());
 			
-			String bottomFrame = "==================";
+			String descString = ChatColor.AQUA + "Description: " + ChatColor.LIGHT_PURPLE + pc.getDescription();
+			String[] splitDesc;
+			
+			splitDesc = ChatPaginator.wordWrap(descString, 22 + args[1].length());
+			
+			sender.sendMessage(splitDesc);
+			
+			String bottomFrame = "=================";
 			
 			for(int x = 0; x < args[1].length(); x++) {
 				
@@ -510,7 +503,7 @@ public class Logic {
 			
 		} else {
 			
-			Main.getPlugin(Main.class).getLogger().log(Level.SEVERE, "Something is wrong with your config! En error occured while verifying protected names.");
+			Main.getPlugin(Main.class).getLogger().log(Level.SEVERE, "Something is wrong with your config! An error occured while verifying protected names.");
 			return false;
 			
 		}
@@ -684,6 +677,221 @@ public class Logic {
 		}
 		
 	}
+	
+	private static boolean checkAge(String age) {
 		
+		int ageInt = Integer.parseInt(age);
+		
+		if(Main.minAge == 0 && Main.maxAge == 0) return true;
+			
+		if(ageInt < Main.minAge || ageInt > Main.maxAge) {
+			
+			return false;
+			
+		}
+		
+		return true;
+		
+	}
+	
+	private static boolean checkHeight(String height) {
+		
+		int heightInt = Integer.parseInt(height);
+		
+		if(Main.minHeight == 0 && Main.maxHeight == 0) return true;
+			
+		if(heightInt < Main.minAge || heightInt > Main.maxAge) {
+			
+			return false;
+			
+		}
+		
+		return true;
+		
+	}
+		
+	//Returns true if the bodytype is permitted
+	public static boolean setValue(CommandSender sender, String[] args) {
+		
+		if(args.length == 3) {
+			
+			Player p = (Player) sender;
+			
+			RPGPlayer tempPlayer = Main.playerData.get(p.getUniqueId());
+			
+			if(tempPlayer == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No player data exists for you! Create a character first!");
+				return false;
+				
+			}
+			
+			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			
+			if(tempCharacter == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No character was found with id " + args[1]);
+				return false;
+				
+			}
+			
+			switch(args[0].substring(3).toLowerCase()) {
+				case "name" :
+					if(checkNames(args[2])) tempCharacter.setName(args[2]);
+					break;
+				case "race":
+					if(checkRace(args[2])) tempCharacter.setRace(args[2]);
+					break;
+				case "class":
+					if(checkClass(args[2])) tempCharacter.setPClass(args[2]);
+					break;
+				case "bodytype":
+					if(checkBodytype(args[2])) tempCharacter.setBodytype(args[2]);
+					break;
+				case "hometown":
+					if(checkHometown(args[2])) tempCharacter.setHometown(args[2]);
+					break;
+				case "age":
+					if(checkAge(args[2])) tempCharacter.setAge(Integer.parseInt(args[2]));
+					break;
+				case "height" :
+					if(checkHeight(args[2])) tempCharacter.setHeight(Integer.parseInt(args[2]));
+					break;
+				
+			}
+			
+			sender.sendMessage(ChatColor.GREEN + "Setting " + args[1] + "'s " + args[0].substring(3).toLowerCase() + " to " + args[2] + ".");
+			
+			IO.save();
+			
+			return true;
+			
+		} else if(args.length > 3 && args[0].toLowerCase().equals("setdescription")){
+			
+			Player p = (Player) sender;
+			
+			RPGPlayer tempPlayer = Main.playerData.get(p.getUniqueId());
+			
+			if(tempPlayer == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No player data exists for you! Create a character first!");
+				return false;
+				
+			}
+			
+			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			
+			if(tempCharacter == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No character was found with id " + args[1]);
+				return false;
+				
+			}
+			
+			tempCharacter.setDescription(String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
+			sender.sendMessage(ChatColor.GREEN + "Set " + args[1] + "'s description.");
+			IO.save();
+			return true;
+			
+		} else if(args.length == 4 && (sender.isOp() || sender.hasPermission("rpgcore.setvalue.op"))){
+			
+			Player p = Bukkit.getPlayer(args[1]);
+			
+			if(p == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No player found with the name " + args[1] + "!");
+				return false;
+				
+			}
+			
+			RPGPlayer tempPlayer = Main.playerData.get(p.getUniqueId());
+			
+			if(tempPlayer == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No player data exists for " + args[1]);
+				return false;
+				
+			}
+			
+			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			
+			if(tempCharacter == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No character was found with id " + args[1] + "!");
+				return false;
+				
+			}
+			
+			switch(args[0].substring(3).toLowerCase()) {
+				case "name" :
+					if(checkNames(args[3])) tempCharacter.setName(args[3]);
+					break;
+				case "race":
+					if(checkRace(args[3])) tempCharacter.setRace(args[3]);
+					break;
+				case "class":
+					if(checkClass(args[3])) tempCharacter.setPClass(args[3]);
+					break;
+				case "bodytype":
+					if(checkBodytype(args[3])) tempCharacter.setBodytype(args[3]);
+					break;
+				case "hometown":
+					if(checkHometown(args[3])) tempCharacter.setHometown(args[3]);
+					break;
+				case "age":
+					if(checkAge(args[3])) tempCharacter.setAge(Integer.parseInt(args[3]));
+					break;
+				case "height" :
+					if(checkHeight(args[3])) tempCharacter.setHeight(Integer.parseInt(args[3]));
+					break;
+				
+			}
+			
+			sender.sendMessage(ChatColor.GREEN + "Setting " + args[1] + "'s " + args[0].substring(3).toLowerCase() + " to " + args[2] + ".");
+			
+			IO.save();
+			
+			return true;
+			
+		} else if(args.length > 4 && args[0].toLowerCase().equals("setdescription") && (sender.isOp() || sender.hasPermission("rpgcore.setvalue.op"))){
+			
+			Player p = Bukkit.getPlayer(args[1]);
+			
+			RPGPlayer tempPlayer = Main.playerData.get(p.getUniqueId());
+			
+			if(tempPlayer == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No player data exists for " + args[1]);
+				return false;
+				
+			}
+			
+			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			
+			if(tempCharacter == null) {
+				
+				sender.sendMessage(ChatColor.RED + "No character was found with id " + args[1]);
+				return false;
+				
+			}
+			
+			tempCharacter.setDescription(String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
+			sender.sendMessage(ChatColor.GREEN + "Set " + args[1] + "'s description.");
+			IO.save();
+			return true;
+			
+		} else if(sender.isOp() || sender.hasPermission("rpgcore.setvalue.op")){
+			
+			sender.sendMessage(ChatColor.RED + "Usage: /rpg set[value] [Player] [Character ID] [value]");
+			return false;
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + "Usage: /rpg set[value] [Character ID] [value]");
+			return false;
+			
+		}
+		
+	}
 	
 }
