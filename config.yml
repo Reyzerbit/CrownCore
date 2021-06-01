@@ -14,9 +14,13 @@ username: username
 password: password
 
 # RPG Info
-# MAKE SURE THIS INFO IS ALL LOWERCASE, OTHERWISE SOMETHING COULD BREAK
+# MAKE SURE THIS INFO IS ALL LOWERCASE! I have tried to prevent casing issues from occuring, but something may still go wrong.
 # For each section (race, class, bodytype, name, and hometown), you need to set whether or not you would like to whitelist or blacklist values, or neither.
-# Possible values for each one are "white", "black", or "none". Anything other than that will cause an error.
+# Possible values for each scheme are "white", "black", or "none". Anything other than that will cause an error.
+# If the values (races, classes, etc) are empty, the plugin will default the protection scheme to "none".
+# If the protected values are empty (protectedRaces, protectedClasses, etc.) THERE WILL PROBABLY BE AN ERROR
+
+#These are all example values.
 
 protectedRaces: white
 races: [dwarf, elf, human]
@@ -28,7 +32,7 @@ protectedBodyTypes: white
 bodytypes: [buff, lanky, skinny, curvy]
 
 protectedNames: black
-names: [fucktard, pussy]
+names: [notch, beans]
 
 protectedHometowns: black
 hometowns: [flavortown, uranus]

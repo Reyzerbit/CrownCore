@@ -35,17 +35,31 @@ public class Core implements CommandExecutor {
 			case "view":
 				return view(sender, args);
 			case "setname":
-				//return view(sender, args);
+				return setValue(sender, args);
+			case "setrace":
+				return setValue(sender, args);
+			case "setclass":
+				return setValue(sender, args);
+			case "setage":
+				return setValue(sender, args);
+			case "setheight":
+				return setValue(sender, args);
+			case "setbodytype":
+				return setValue(sender, args);
+			case "sethometown":
+				return setValue(sender, args);
+			case "setdescription":
+				return setValue(sender, args);
 			case "setactive":
 				return setactive(sender, args);
 			default:
-				sender.sendMessage(ChatColor.RED + "Usage: /rpg [ list | create | delete | view | setactive ]");
+				sender.sendMessage(ChatColor.RED + "Usage: /rpg [ list | create | delete | view | setactive | set{value} ]");
 				return false;
 			}	
 			
 		} else if(sender.isOp()){
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg [ reload | info | list | create | delete | view | setactive ]");
+			sender.sendMessage(ChatColor.RED + "Usage: /rpg [ reload | info | list | create | delete | view | setactive | set{value} ]");
 			return false;
 			
 		} else {
@@ -66,7 +80,7 @@ public class Core implements CommandExecutor {
 
 	boolean reload(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("rpgcore.info"))) {
+		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("rpgcore.reload"))) {
 			
 			Main.reload();
 			
@@ -145,6 +159,18 @@ public class Core implements CommandExecutor {
 		if(sender instanceof Player) {
 			
 			return Logic.viewCharacter(sender, args);
+			
+		}
+		
+		return false;
+		
+	}
+	
+	boolean setValue(CommandSender sender, String[] args) {
+		
+		if(sender instanceof Player) {
+			
+			return Logic.setValue(sender, args);
 			
 		}
 		

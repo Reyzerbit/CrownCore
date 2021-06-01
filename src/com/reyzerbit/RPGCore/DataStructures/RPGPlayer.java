@@ -89,5 +89,17 @@ public class RPGPlayer {
 		return tempList;
 		
 	}
+	
+	public RPGCharacter getCharacter(String id) {
+		
+		for(RPGCharacter c : playerCharacters) {
+			
+			if(c.getCharacterID().toLowerCase().equals(id.toLowerCase())) return c;
+			
+		}
+		
+		return null;
+		
+	}
 
 }

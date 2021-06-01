@@ -11,6 +11,22 @@ public class RPGCharacter {
 	private int height;
 	private String bodytype;
 	private String hometown;
+	private String description;
+	
+	public RPGCharacter() {
+		
+		CharacterID = "";
+		
+		name = "";
+		race = "";
+		pClass = "";
+		age = 0;
+		height = 0;
+		bodytype = "";
+		hometown = "";
+		description = "";
+		
+	}
 	
 	public RPGCharacter(String id, String n, String r, String c, int a, int h, String bt, String ht) {
 		
@@ -23,6 +39,7 @@ public class RPGCharacter {
 		height = h;
 		bodytype = bt;
 		hometown = ht;
+		description = "";
 		
 	}
 
@@ -88,6 +105,14 @@ public class RPGCharacter {
 
 	public void setHometown(String hometown) {
 		this.hometown = hometown;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
