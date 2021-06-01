@@ -1,0 +1,43 @@
+#    RPG Cards Config File
+#    Developed by Reyzerbit
+#    Commissioned for MasterMetaphor
+#    Version 1.0
+
+# Enable or diable the plugin
+enabled: true
+
+# MySQL Information
+hostname: name
+port: 00000
+database: database
+username: username
+password: password
+
+# RPG Info
+# MAKE SURE THIS INFO IS ALL LOWERCASE, OTHERWISE SOMETHING COULD BREAK
+# For each section (race, class, bodytype, name, and hometown), you need to set whether or not you would like to whitelist or blacklist values, or neither.
+# Possible values for each one are "white", "black", or "none". Anything other than that will cause an error.
+
+protectedRaces: white
+races: [dwarf, elf, human]
+
+protectedClasses: white
+classes: [healer, fighter, mage]
+
+protectedBodyTypes: white
+bodytypes: [buff, lanky, skinny, curvy]
+
+protectedNames: black
+names: [fucktard, pussy]
+
+protectedHometowns: black
+hometowns: [flavortown, uranus]
+
+# If you wish for these to have no constraint, set both the min and max to 0 instead of leaving them blank
+
+min_age: 18
+max_age: 100
+
+min_height: 36
+max_height: 84
+

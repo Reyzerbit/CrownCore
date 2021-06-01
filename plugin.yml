@@ -1,0 +1,36 @@
+name: RPGCore
+main: com.reyzerbit.RPGCore.Main
+version: 1.0
+description: This plugin contains core ellements for an RPG style minecraft game.
+api-version: 1.14
+author: Reyzerbit
+website: www.reyzerbit.com
+prefix: RPG Core
+commands:
+  rpg:
+    description: Basic command for all RPG Core plugin functionality
+    aliases: [rpg]
+    permission: rpgcore.rpg
+permissions:
+  rpgcore.rpg:
+    default: true
+  rpgcore.create:
+    default: true
+  rpgcore.delete:
+    default: true
+  rpgcore.list:
+    default: true
+  rpgcore.setactive:
+    default: true
+  rpgcore.view:
+    default: true
+  rpgcore.create.op:
+    default: op
+  rpgcore.delete.op:
+    default: op
+  rpgcore.list.op:
+    default: op
+  rpgcore.reload:
+    default: op
+  rpgcore.info:
+    default: op
