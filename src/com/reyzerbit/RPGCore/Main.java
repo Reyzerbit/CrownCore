@@ -15,6 +15,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.reyzerbit.RPGCore.DataStructures.RPGPlayer;
+import com.reyzerbit.RPGCore.Events.Core;
 
 public class Main extends JavaPlugin {
 	
