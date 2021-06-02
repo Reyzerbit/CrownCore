@@ -13,6 +13,9 @@ import com.reyzerbit.RPGCore.DataStructures.RPGCharacter;
 import com.reyzerbit.RPGCore.DataStructures.RPGPlayer;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 
 public class Logic {
 
@@ -308,7 +311,7 @@ public class Logic {
 			
 			if(Main.playerData.containsKey(((Player) sender).getUniqueId())) {
 			
-				sender.sendMessage(ChatColor.BLUE + "=========Your Characters=========");
+				sender.sendMessage(ChatColor.BLUE + "=========" + ChatColor.AQUA + "Your Characters" + ChatColor.BLUE + "=========");
 				
 				for(RPGCharacter character : Main.playerData.get(((Player) sender).getUniqueId()).getCharacters()) {
 					
@@ -410,22 +413,28 @@ public class Logic {
 				
 			}
 			
-			sender.sendMessage(ChatColor.BLUE + "=========" + args[1] + "=========");
+			sender.sendMessage(ChatColor.BLUE + "=========" + ChatColor.AQUA + args[1] + ChatColor.BLUE + "=========");
 			
-			sender.sendMessage(ChatColor.AQUA + "Name: " + ChatColor.LIGHT_PURPLE + pc.getName());
-			sender.sendMessage(ChatColor.AQUA + "Race: " + ChatColor.LIGHT_PURPLE + pc.getRace());
-			sender.sendMessage(ChatColor.AQUA + "Class: " + ChatColor.LIGHT_PURPLE + pc.getPClass());
-			sender.sendMessage(ChatColor.AQUA + "Age: " + ChatColor.LIGHT_PURPLE + pc.getAge());
-			sender.sendMessage(ChatColor.AQUA + "Height: " + ChatColor.LIGHT_PURPLE + pc.getHeight());
-			sender.sendMessage(ChatColor.AQUA + "Bodytype: " + ChatColor.LIGHT_PURPLE + pc.getBodytype());
-			sender.sendMessage(ChatColor.AQUA + "Hometown: " + ChatColor.LIGHT_PURPLE + pc.getHometown());
+			sender.spigot().sendMessage(convertToClickCommand("Name:", " " + pc.getName(), pc.getCharacterID(), "name").create());
+			sender.spigot().sendMessage(convertToClickCommand("Race:", " " + pc.getRace(), pc.getCharacterID(), "race").create());
+			sender.spigot().sendMessage(convertToClickCommand("Class:", " " + pc.getPClass(), pc.getCharacterID(), "class").create());
+			sender.spigot().sendMessage(convertToClickCommand("Age:", " " + pc.getAge(), pc.getCharacterID(), "age").create());
+			sender.spigot().sendMessage(convertToClickCommand("Height:", " " + pc.getHeight(), pc.getCharacterID(), "height").create());
+			sender.spigot().sendMessage(convertToClickCommand("Bodytype:", " " + pc.getBodytype(), pc.getCharacterID(), "bodytype").create());
+			sender.spigot().sendMessage(convertToClickCommand("Hometown:", " " + pc.getHometown(), pc.getCharacterID(), "hometown").create());
 			
 			String descString = ChatColor.AQUA + "Description: " + ChatColor.LIGHT_PURPLE + pc.getDescription();
 			String[] splitDesc;
 			
-			splitDesc = ChatPaginator.wordWrap(descString, 22 + args[1].length());
+			splitDesc = ChatPaginator.wordWrap(descString, 20 + args[1].length());
 			
-			sender.sendMessage(splitDesc);
+			sender.spigot().sendMessage(convertToClickCommand(splitDesc[0], "", pc.getCharacterID(), "description").create());
+			
+			for(int x = 1 ; x < splitDesc.length ; x++) {
+				
+				sender.sendMessage(splitDesc[x]);
+				
+			}
 			
 			String bottomFrame = "=================";
 			
@@ -891,6 +900,20 @@ public class Logic {
 			return false;
 			
 		}
+		
+	}
+	
+	private static ComponentBuilder convertToClickCommand(String clickText, String followingText, String id, String key) {
+		
+		ComponentBuilder text = new ComponentBuilder(clickText);
+		
+		ComponentBuilder hoverText = new ComponentBuilder(ChatColor.GREEN + "Click to change " + key + "!");
+		
+		HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create());
+		
+		text.color(ChatColor.AQUA).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/rpg set" + key + " " + id + " ")).event(hoverEvent).append(followingText).color(ChatColor.LIGHT_PURPLE);
+		
+		return text;
 		
 	}
 	
