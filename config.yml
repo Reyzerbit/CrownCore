@@ -45,3 +45,7 @@ max_age: 100
 min_height: 36
 max_height: 84
 
+# Certain classes may have a vault permissions group assigned to them.
+# For each class you wish to have a perms group, create the variable "[class]group", and set it's value to the perms group id.
+elfgroup: elfperms
+

@@ -14,6 +14,8 @@ public class Core implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
+		if(!sender.hasPermission("rpgcore.rpg")) return false;
+		
 		if(!Main.pluginEnabled) {
 			
 			sender.sendMessage(ChatColor.RED + "Plugin is disabled!");
@@ -76,8 +78,18 @@ public class Core implements CommandExecutor {
 	
 	private boolean setactive(CommandSender sender, String[] args) {
 
-		Logic.setAsActive(sender, args);
-		return true;
+		if(sender instanceof Player && sender.hasPermission("rpgcore.setactive")) {
+			
+			Logic.setAsActive(sender, args);
+			return true;
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + " You do not have permission to use that command!");
+			
+		}
+		
+		return false;
 		
 	}
 
@@ -123,9 +135,13 @@ public class Core implements CommandExecutor {
 	
 	boolean create(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player) {
+		if(sender instanceof Player && sender.hasPermission("rpgcore.create")) {
 			
 			return Logic.createChecks(sender, args);
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + " You do not have permission to use that command!");
 			
 		}
 		
@@ -135,9 +151,13 @@ public class Core implements CommandExecutor {
 	
 	boolean delete(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player) {
+		if(sender instanceof Player && sender.hasPermission("rpgcore.delete")) {
 			
 			return Logic.deleteCharacter(sender, args);
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + " You do not have permission to use that command!");
 			
 		}
 		
@@ -147,9 +167,13 @@ public class Core implements CommandExecutor {
 	
 	boolean list(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player) {
+		if(sender instanceof Player && sender.hasPermission("rpgcore.list")) {
 			
 			return Logic.listCharacters(sender, args);
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + " You do not have permission to use that command!");
 			
 		}
 		
@@ -159,9 +183,13 @@ public class Core implements CommandExecutor {
 	
 	boolean view(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player) {
+		if(sender instanceof Player && sender.hasPermission("rpgcore.view")) {
 			
 			return Logic.viewCharacter(sender, args);
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + " You do not have permission to use that command!");
 			
 		}
 		
@@ -171,9 +199,13 @@ public class Core implements CommandExecutor {
 	
 	boolean setValue(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player) {
+		if(sender instanceof Player && sender.hasPermission("rpgcore.setvalue")) {
 			
 			return Logic.setValue(sender, args);
+			
+		} else {
+			
+			sender.sendMessage(ChatColor.RED + " You do not have permission to use that command!");
 			
 		}
 		
