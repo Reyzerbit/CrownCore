@@ -12,10 +12,13 @@ import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.reyzerbit.RPGCore.DataStructures.RPGPlayer;
 import com.reyzerbit.RPGCore.Events.Core;
+
+import net.milkbowl.vault.permission.Permission;
 
 public class Main extends JavaPlugin {
 	
@@ -69,26 +72,46 @@ public class Main extends JavaPlugin {
 	public static int sqlPort;
 	public static Connection sqlConnection;
 	
+	//Vault API
+	public static Permission perms = null;
+	
 	// Fired when plugin is first enabled
     @Override
     public void onEnable() {
-
-    	//generate files if missing
-		saveResource("config.yml", false);
     	
 		//congif.yml
     	config = this.getConfig();
     	configFile = new File(this.getDataFolder(), "config.yml");
+
+    	//Generate files if missing
+    	if(!configFile.exists()) {
+
+    		saveResource("config.yml", false);
+    		
+    	}
     	
     	playerDataDir = new File(this.getDataFolder(), "playerdata");
     	
     	//Saves Init
     	IO.playerSavesConfig = new HashMap<String, FileConfiguration>();
     	playerData = new HashMap<UUID, RPGPlayer>();
+    	
+    	if(getServer().getPluginManager().getPlugin("Vault") == null) {
+    		
+    		getServer().getLogger().log(Level.SEVERE, "Unable to detect Vault! Disabling RPG Core.");
+    		getServer().getPluginManager().disablePlugin(this);
+    		return;
+    		
+    	}
 		
+    	setupPermissions();
+    	
 		reload();
 		
     	this.getCommand("rpg").setExecutor(new Core());
+    	
+    	//WIP
+    	//this.getCommand("rpg").setTabCompleter(new TabCompleterRPG());
     	
     }
     
@@ -173,6 +196,14 @@ public class Main extends JavaPlugin {
     		
     	}
     	
+    }
+    
+    private boolean setupPermissions() {
+    	
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+        
     }
     
 }

@@ -22,7 +22,7 @@ public class Logic {
 	public static boolean createChecks(CommandSender sender, String[] args) {
 		
 		//If executed correctly by player
-		if(args.length == 9 && sender instanceof Player) {
+		if(args.length == 9 && sender instanceof Player && sender.hasPermission("rpgcore.create")) {
 			
 			if(Main.playerData.containsKey(((Player) sender).getUniqueId())) {
 				
@@ -463,9 +463,13 @@ public class Logic {
 			
 			Player p = (Player) sender;
 			
-			Main.playerData.get(p.getUniqueId()).setActiveCharacter(args[1]);
+			RPGPlayer rpgP = Main.playerData.get(p.getUniqueId());
+			
+			rpgP.setActiveCharacter(args[1]);
 			
 			sender.sendMessage(ChatColor.GREEN + "Setting your active character to " + args[1]);
+			
+			setClassGroup(p, Main.config.getString(rpgP.getActiveCharacter().getPClass() + "group"));
 			
 			IO.save();
 			
@@ -914,6 +918,14 @@ public class Logic {
 		text.color(ChatColor.AQUA).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/rpg set" + key + " " + id + " ")).event(hoverEvent).append(followingText).color(ChatColor.LIGHT_PURPLE);
 		
 		return text;
+		
+	}
+	
+	public static void setClassGroup(Player p, String group) {
+		
+		if(group == null || group.equals("")) return;
+		
+		Main.perms.playerAddGroup(p, group);
 		
 	}
 	
