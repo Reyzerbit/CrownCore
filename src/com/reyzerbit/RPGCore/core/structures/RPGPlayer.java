@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.DataStructures;
+package com.reyzerbit.RPGCore.core.structures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +99,14 @@ public class RPGPlayer {
 		}
 		
 		return null;
+		
+	}
+	
+	public boolean hasActiveCharacter() {
+		
+		if(activeCharacter == null) return false;
+		
+		return true;
 		
 	}
 

@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.DataStructures;
+package com.reyzerbit.RPGCore.core.structures;
 
 public class RPGCharacter {
 	
