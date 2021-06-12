@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.Events;
+package com.reyzerbit.RPGCore.core.events;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
-public class TabCompleterRPG implements TabCompleter {
+public class TabCompleterEvent implements TabCompleter {
 	
 	private static final String[] commands = {"create", "delete", "list", "setactive", "view", "reload", "info", 
 			"setname", "setrace", "setclass", "setage", "setheight", "setbodytype", "sethometown", "setdescription"};

@@ -2,8 +2,6 @@ package com.reyzerbit.RPGCore;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,21 +13,24 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.reyzerbit.RPGCore.DataStructures.RPGPlayer;
-import com.reyzerbit.RPGCore.Events.Core;
+import com.reyzerbit.RPGCore.core.Conversion;
+import com.reyzerbit.RPGCore.core.events.RPGCommandEvent;
+import com.reyzerbit.RPGCore.core.io.Load;
+import com.reyzerbit.RPGCore.core.io.Save;
+import com.reyzerbit.RPGCore.core.structures.RPGPlayer;
 
 import net.milkbowl.vault.permission.Permission;
 
-public class Main extends JavaPlugin {
+public class RPGCore extends JavaPlugin {
 	
-	// Used to determine if config values are whitelisted, blacklisted, or neither
+	// Used to determine if configuration values are white-listed, black-listed, or neither
 	public enum protectValues {
 		
 		WHITE, BLACK, NONE
 		
 	}
 	
-	//Config
+	//Configuration
 	public static FileConfiguration config;
 	public static File configFile;
 	
@@ -75,6 +76,13 @@ public class Main extends JavaPlugin {
 	//Vault API
 	public static Permission perms = null;
 	
+	//Player Data Configs
+	public static Map<String, FileConfiguration> playerSavesConfig;
+	
+	
+	/**************************************************************************/
+	
+	
 	// Fired when plugin is first enabled
     @Override
     public void onEnable() {
@@ -93,7 +101,7 @@ public class Main extends JavaPlugin {
     	playerDataDir = new File(this.getDataFolder(), "playerdata");
     	
     	//Saves Init
-    	IO.playerSavesConfig = new HashMap<String, FileConfiguration>();
+    	RPGCore.playerSavesConfig = new HashMap<String, FileConfiguration>();
     	playerData = new HashMap<UUID, RPGPlayer>();
     	
     	if(getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -108,7 +116,7 @@ public class Main extends JavaPlugin {
     	
 		reload();
 		
-    	this.getCommand("rpg").setExecutor(new Core());
+    	this.getCommand("rpg").setExecutor(new RPGCommandEvent());
     	
     	//WIP
     	//this.getCommand("rpg").setTabCompleter(new TabCompleterRPG());
@@ -119,14 +127,15 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
-    	IO.save();
+    	Save.save();
     	
     }
     
+    // Used to reload the plugin
     @SuppressWarnings("unchecked")
 	public static void reload() {
     	
-    	IO.load();
+    	Load.load();
     	
     	config = YamlConfiguration.loadConfiguration(configFile);
     	
@@ -140,11 +149,11 @@ public class Main extends JavaPlugin {
     	classes = (List<String>) config.getList("classes");
     	bodytypes = (List<String>) config.getList("bodytypes");
     	
-    	protectedNames = convertConfigEnums(config.getString("protectedNames"));
-    	protectedHometowns = convertConfigEnums(config.getString("protectedHometowns"));
-    	protectedRaces = convertConfigEnums(config.getString("protectedRaces"));
-    	protectedClasses = convertConfigEnums(config.getString("protectedClasses"));
-    	protectedBodyTypes = convertConfigEnums(config.getString("protectedBodyTypes"));
+    	protectedNames = Conversion.convertConfigEnums(config.getString("protectedNames"));
+    	protectedHometowns = Conversion.convertConfigEnums(config.getString("protectedHometowns"));
+    	protectedRaces = Conversion.convertConfigEnums(config.getString("protectedRaces"));
+    	protectedClasses = Conversion.convertConfigEnums(config.getString("protectedClasses"));
+    	protectedBodyTypes = Conversion.convertConfigEnums(config.getString("protectedBodyTypes"));
     	
     	minAge = config.getInt("min_age");
     	maxAge = config.getInt("max_age");
@@ -157,44 +166,6 @@ public class Main extends JavaPlugin {
     	sqlUser = config.getString("username");
     	sqlPassword = config.getString("password");
     	sqlPort = config.getInt("port");
-    	
-    }
-    
-    @SuppressWarnings("unused")
-	private static void sqlConnect() throws SQLException, ClassNotFoundException {
-    	
-    	if(sqlConnection != null && !sqlConnection.isClosed()) {
-    		
-    		return;
-    		
-    	}
-    	
-    	sqlConnection = DriverManager.getConnection("jdbc:mysql://"
-                + sqlName + ":" + sqlPort + "/" + sqlDatabase,
-                sqlUser, sqlPassword);
-    	
-    }
-
-    private static protectValues convertConfigEnums(String value) {
-    	
-    	if(value.toLowerCase().equals("black")) {
-    		
-    		return protectValues.BLACK;
-    		
-    	} else if(value.toLowerCase().equals("white")) {
-    		
-    		return protectValues.WHITE;
-    		
-    	} else if(value.toLowerCase().equals("none")) {
-    		
-    		return protectValues.NONE;
-    		
-    	} else {
-    		
-    		Main.getPlugin(Main.class).getLogger().log(Level.SEVERE, "Something is wrong with your config! En error occured while reading protected values (whitelist, blacklist, none).");
-    		return null;
-    		
-    	}
     	
     }
     

@@ -1,22 +1,26 @@
-package com.reyzerbit.RPGCore.Events;
+package com.reyzerbit.RPGCore.core.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.reyzerbit.RPGCore.Logic;
-import com.reyzerbit.RPGCore.Main;
+import com.reyzerbit.RPGCore.RPGCore;
+import com.reyzerbit.RPGCore.core.Checks;
+import com.reyzerbit.RPGCore.core.Delete;
+import com.reyzerbit.RPGCore.core.Setters;
+import com.reyzerbit.RPGCore.core.ViewList;
 
-public class Core implements CommandExecutor {
+public class RPGCommandEvent implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
 		if(!sender.hasPermission("rpgcore.rpg")) return false;
 		
-		if(!Main.pluginEnabled) {
+		if(!RPGCore.pluginEnabled) {
 			
 			sender.sendMessage(ChatColor.RED + "Plugin is disabled!");
 			return true;
@@ -38,6 +42,8 @@ public class Core implements CommandExecutor {
 			case "list":
 				return list(sender, args);
 			case "view":
+				return view(sender, args);
+			case "viewspecific":
 				return view(sender, args);
 			case "setname":
 				return setValue(sender, args);
@@ -80,7 +86,7 @@ public class Core implements CommandExecutor {
 
 		if(sender instanceof Player && sender.hasPermission("rpgcore.setactive")) {
 			
-			Logic.setAsActive(sender, args);
+			Setters.setAsActive(sender, args);
 			return true;
 			
 		} else {
@@ -97,7 +103,7 @@ public class Core implements CommandExecutor {
 		
 		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("rpgcore.reload"))) {
 			
-			Main.reload();
+			RPGCore.reload();
 			
 			sender.sendMessage(ChatColor.GREEN + "Reload complete!");
 			
@@ -118,7 +124,7 @@ public class Core implements CommandExecutor {
 		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("rpgcore.info"))) {
 		
 			sender.sendMessage(ChatColor.GREEN + "RPGCore by Reyzerbit");
-			sender.sendMessage(ChatColor.GREEN + "Version 1.0");
+			sender.sendMessage(ChatColor.GREEN + "Version " + Bukkit.getPluginManager().getPlugin("RPGCore").getDescription().getVersion());
 			sender.sendMessage(ChatColor.GREEN + "Copyright Reyzerbit 2020 under the GNU GPL License");
 			
 			return true;
@@ -137,7 +143,7 @@ public class Core implements CommandExecutor {
 		
 		if(sender instanceof Player && sender.hasPermission("rpgcore.create")) {
 			
-			return Logic.createChecks(sender, args);
+			return Checks.checkCreate(sender, args);
 			
 		} else {
 			
@@ -153,7 +159,7 @@ public class Core implements CommandExecutor {
 		
 		if(sender instanceof Player && sender.hasPermission("rpgcore.delete")) {
 			
-			return Logic.deleteCharacter(sender, args);
+			return Delete.deleteCharacter(sender, args);
 			
 		} else {
 			
@@ -169,7 +175,7 @@ public class Core implements CommandExecutor {
 		
 		if(sender instanceof Player && sender.hasPermission("rpgcore.list")) {
 			
-			return Logic.listCharacters(sender, args);
+			return ViewList.listCharacters(sender, args);
 			
 		} else {
 			
@@ -185,7 +191,20 @@ public class Core implements CommandExecutor {
 		
 		if(sender instanceof Player && sender.hasPermission("rpgcore.view")) {
 			
-			return Logic.viewCharacter(sender, args);
+			if(args.length == 3 && args[0].equalsIgnoreCase("viewspecific")) {
+				
+				return ViewList.viewCharacter(sender, args, args[2]);
+				
+			} else if(args[0].equalsIgnoreCase("viewspecific")) {
+				
+				sender.sendMessage(ChatColor.RED + "Usage: /rpg viewspecific [Player] [CharacterId]");
+				return false;
+				
+			} else {
+			
+				return ViewList.viewCharacter(sender, args, "");
+				
+			}
 			
 		} else {
 			
@@ -201,7 +220,7 @@ public class Core implements CommandExecutor {
 		
 		if(sender instanceof Player && sender.hasPermission("rpgcore.setvalue")) {
 			
-			return Logic.setValue(sender, args);
+			return Setters.setValue(sender, args);
 			
 		} else {
 			
