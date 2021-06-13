@@ -1,10 +1,13 @@
-
 plugins {
 
 	id 'eclipse'
     id 'java-library'
     
+    id 'maven-publish'
+    
 }
+
+group = 'com.github.Reyzerbit'
 
 repositories {
 
