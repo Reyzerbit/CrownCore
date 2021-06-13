@@ -1,0 +1,29 @@
+
+plugins {
+
+	id 'eclipse'
+    id 'java-library'
+    
+}
+
+repositories {
+
+	maven { url 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
+	maven { url 'https://jitpack.io' }
+	
+	jcenter()
+    
+}
+
+dependencies {
+	
+	// Spigot
+	implementation 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
+	
+	// Vault
+	implementation "com.github.MilkBowl:VaultAPI:1.7"
+	
+	//JUnit
+    testImplementation 'junit:junit:4.12'
+    
+}
