@@ -7,7 +7,7 @@ plugins {
     
 }
 
-group = 'com.github.Reyzerbit'
+group 'com.github.Reyzerbit'
 
 repositories {
 
