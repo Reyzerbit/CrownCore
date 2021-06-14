@@ -7,14 +7,30 @@ plugins {
     
 }
 
-group 'com.github.Reyzerbit'
+publishing {
+
+    publications {
+    
+        maven(MavenPublication) {
+        
+            groupId = 'com.reyzerbit'
+            artifactId = 'RPGCore'
+            version = '1.4'
+
+            from components.java
+            
+        }
+        
+    }
+    
+}
 
 repositories {
 
 	maven { url 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
 	maven { url 'https://jitpack.io' }
 	
-	jcenter()
+	mavenCentral()
     
 }
 
