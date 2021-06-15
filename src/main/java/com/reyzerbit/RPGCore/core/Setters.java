@@ -22,7 +22,7 @@ public class Setters {
 			
 			Player p = (Player) sender;
 			
-			SetActiveCharacterEvent setActiveEvent = new SetActiveCharacterEvent(p.getUniqueId(), args[1]);
+			SetActiveCharacterEvent setActiveEvent = new SetActiveCharacterEvent(p, p.getUniqueId(), args[1]);
 			
 			Bukkit.getPluginManager().callEvent(setActiveEvent);
 			
@@ -55,7 +55,7 @@ public class Setters {
 				
 			}
 			
-			SetActiveCharacterEvent setActiveEvent = new SetActiveCharacterEvent(p.getUniqueId(), args[2]);
+			SetActiveCharacterEvent setActiveEvent = new SetActiveCharacterEvent(p, p.getUniqueId(), args[2]);
 			
 			Bukkit.getPluginManager().callEvent(setActiveEvent);
 			
