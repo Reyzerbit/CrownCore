@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -91,6 +90,8 @@ public class CrownCore extends JavaPlugin {
     	}
     	
     	config = this.getConfig();
+    	
+    	pluginEnabled = config.getBoolean("enabled");
 		
 		if(!pluginEnabled) {
 			
@@ -131,7 +132,7 @@ public class CrownCore extends JavaPlugin {
     @Override
     public void onDisable() {
 
-    	Save.save();
+    	if(pluginEnabled) Save.save();
     	
     }
     
@@ -142,9 +143,6 @@ public class CrownCore extends JavaPlugin {
     	Load.load();
     	
     	config = YamlConfiguration.loadConfiguration(configFile);
-    	
-    	//Enabled
-    	pluginEnabled = config.getBoolean("enabled");
     	
     	//Character Constraints
     	names = (List<String>) config.getList("names");
