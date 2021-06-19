@@ -83,11 +83,13 @@ public class Create {
 		//Adds new character
 		sender.sendMessage(ChatColor.GREEN + "Creating new character with ID " + args[1]);
 		
-		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1]);
+		CrownCharacter cc = new CrownCharacter(args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), args[7], args[8]);
+		
+		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
 		
 		if(!createCharacterEvent.isCancelled()) {
 			
-			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(new CrownCharacter(args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), args[7], args[8]));
+			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(cc);
 			
 			Save.save();
 			return true;
@@ -178,7 +180,9 @@ public class Create {
 		//Adds new character
 		sender.sendMessage(ChatColor.GREEN + "Creating new character for player " + args[1] + " with ID " + args[2]);
 		
-		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(p.getUniqueId(), args[2]);
+		CrownCharacter cc = new CrownCharacter(args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), args[7], args[8]);
+		
+		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
 		
 		if(!createCharacterEvent.isCancelled()) {
 			
@@ -188,7 +192,7 @@ public class Create {
 				
 			}
 			
-			CrownCore.playerData.get(p.getUniqueId()).addCharacter(new CrownCharacter(args[2], args[3], args[4], args[5], Integer.parseInt(args[6]), Integer.parseInt(args[7]), args[8], args[9]));
+			CrownCore.playerData.get(p.getUniqueId()).addCharacter(cc);
 			
 			Save.save();
 			return true;

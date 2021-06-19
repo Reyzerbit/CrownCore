@@ -6,17 +6,21 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
+
 public class CreateCharacterEvent extends Event implements Cancellable {
 	
 	private static final HandlerList handlers = new HandlerList();
 	
+	private final CrownCharacter character;
 	private final UUID playerUUID;
 	private final String rpgCharacterId;
 	
 	private boolean isCancelled;
 	
-	public CreateCharacterEvent(UUID uuid, String id) {
+	public CreateCharacterEvent(UUID uuid, String id, CrownCharacter character) {
 		
+		this.character = character;
 		playerUUID = uuid;
 		rpgCharacterId = id;
 		
@@ -47,6 +51,10 @@ public class CreateCharacterEvent extends Event implements Cancellable {
 		
 		return playerUUID;
 		
+	}
+
+	public CrownCharacter getCharacter() {
+		return character;
 	}
 
 	@Override

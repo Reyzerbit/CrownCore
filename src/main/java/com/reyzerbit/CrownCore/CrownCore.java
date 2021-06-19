@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -80,7 +81,6 @@ public class CrownCore extends JavaPlugin {
     public void onEnable() {
     	
 		//congif.yml
-    	config = this.getConfig();
     	configFile = new File(this.getDataFolder(), "config.yml");
 
     	//Generate files if missing
@@ -89,6 +89,16 @@ public class CrownCore extends JavaPlugin {
     		saveResource("config.yml", false);
     		
     	}
+    	
+    	config = this.getConfig();
+		
+		if(!pluginEnabled) {
+			
+			getLogger().log(Level.INFO, "[CrownCore] Config enabled value is set to false! Disabling CrownCore!");
+			this.setEnabled(false);
+			return;
+			
+		}
     	
     	playerDataDir = new File(this.getDataFolder(), "playerdata");
     	

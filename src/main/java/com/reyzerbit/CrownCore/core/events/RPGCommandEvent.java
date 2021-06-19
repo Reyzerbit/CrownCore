@@ -20,13 +20,6 @@ public class RPGCommandEvent implements CommandExecutor {
 		
 		if(!sender.hasPermission("crowncore.cc")) return false;
 		
-		if(!CrownCore.pluginEnabled) {
-			
-			sender.sendMessage(ChatColor.RED + "Plugin is disabled!");
-			return true;
-			
-		}
-		
 		if(args.length > 0) {
 			
 			switch(args[0]) {
