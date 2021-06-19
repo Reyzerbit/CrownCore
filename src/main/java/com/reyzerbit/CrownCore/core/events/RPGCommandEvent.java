@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.core.events;
+package com.reyzerbit.CrownCore.core.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,20 +7,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.Checks;
-import com.reyzerbit.RPGCore.core.Delete;
-import com.reyzerbit.RPGCore.core.Setters;
-import com.reyzerbit.RPGCore.core.ViewList;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.Checks;
+import com.reyzerbit.CrownCore.core.Delete;
+import com.reyzerbit.CrownCore.core.Setters;
+import com.reyzerbit.CrownCore.core.ViewList;
 
 public class RPGCommandEvent implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if(!sender.hasPermission("rpgcore.rpg")) return false;
+		if(!sender.hasPermission("crowncore.cc")) return false;
 		
-		if(!RPGCore.pluginEnabled) {
+		if(!CrownCore.pluginEnabled) {
 			
 			sender.sendMessage(ChatColor.RED + "Plugin is disabled!");
 			return true;
@@ -64,18 +64,18 @@ public class RPGCommandEvent implements CommandExecutor {
 			case "setactive":
 				return setactive(sender, args);
 			default:
-				sender.sendMessage(ChatColor.RED + "Usage: /rpg [ list | create | delete | view | setactive | set{value} ]");
+				sender.sendMessage(ChatColor.RED + "Usage: /cc [ list | create | delete | view | setactive | set{value} ]");
 				return false;
 			}	
 			
 		} else if(sender.isOp()){
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg [ reload | info | list | create | delete | view | setactive | set{value} ]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc [ reload | info | list | create | delete | view | setactive | set{value} ]");
 			return false;
 			
 		} else {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg [ list | create | delete | view | setactive ]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc [ list | create | delete | view | setactive ]");
 			return false;
 			
 		}
@@ -84,7 +84,7 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	private boolean setactive(CommandSender sender, String[] args) {
 
-		if(sender instanceof Player && sender.hasPermission("rpgcore.setactive")) {
+		if(sender instanceof Player && sender.hasPermission("crowncore.setactive")) {
 			
 			Setters.setAsActive(sender, args);
 			return true;
@@ -101,9 +101,9 @@ public class RPGCommandEvent implements CommandExecutor {
 
 	boolean reload(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("rpgcore.reload"))) {
+		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("crowncore.reload"))) {
 			
-			RPGCore.reload();
+			CrownCore.reload();
 			
 			sender.sendMessage(ChatColor.GREEN + "Reload complete!");
 			
@@ -121,10 +121,10 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	boolean info(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("rpgcore.info"))) {
+		if(sender instanceof Player && (sender.isOp() || sender.hasPermission("crowncore.info"))) {
 		
-			sender.sendMessage(ChatColor.GREEN + "RPGCore by Reyzerbit");
-			sender.sendMessage(ChatColor.GREEN + "Version " + Bukkit.getPluginManager().getPlugin("RPGCore").getDescription().getVersion());
+			sender.sendMessage(ChatColor.GREEN + "CrownCore by Reyzerbit");
+			sender.sendMessage(ChatColor.GREEN + "Version " + Bukkit.getPluginManager().getPlugin("CrownCore").getDescription().getVersion());
 			sender.sendMessage(ChatColor.GREEN + "Copyright Reyzerbit 2020 under the GNU GPL License");
 			
 			return true;
@@ -141,7 +141,7 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	boolean create(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && sender.hasPermission("rpgcore.create")) {
+		if(sender instanceof Player && sender.hasPermission("crowncore.create")) {
 			
 			return Checks.checkCreate(sender, args);
 			
@@ -157,7 +157,7 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	boolean delete(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && sender.hasPermission("rpgcore.delete")) {
+		if(sender instanceof Player && sender.hasPermission("crowncore.delete")) {
 			
 			return Delete.deleteCharacter(sender, args);
 			
@@ -173,7 +173,7 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	boolean list(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && sender.hasPermission("rpgcore.list")) {
+		if(sender instanceof Player && sender.hasPermission("crowncore.list")) {
 			
 			return ViewList.listCharacters(sender, args);
 			
@@ -189,7 +189,7 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	boolean view(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && sender.hasPermission("rpgcore.view")) {
+		if(sender instanceof Player && sender.hasPermission("crowncore.view")) {
 			
 			if(args.length == 3 && args[0].equalsIgnoreCase("viewspecific")) {
 				
@@ -197,7 +197,7 @@ public class RPGCommandEvent implements CommandExecutor {
 				
 			} else if(args[0].equalsIgnoreCase("viewspecific")) {
 				
-				sender.sendMessage(ChatColor.RED + "Usage: /rpg viewspecific [Player] [CharacterId]");
+				sender.sendMessage(ChatColor.RED + "Usage: /cc viewspecific [Player] [CharacterId]");
 				return false;
 				
 			} else {
@@ -218,7 +218,7 @@ public class RPGCommandEvent implements CommandExecutor {
 	
 	boolean setValue(CommandSender sender, String[] args) {
 		
-		if(sender instanceof Player && sender.hasPermission("rpgcore.setvalue")) {
+		if(sender instanceof Player && sender.hasPermission("crowncore.setvalue")) {
 			
 			return Setters.setValue(sender, args);
 			

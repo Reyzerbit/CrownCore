@@ -1,27 +1,27 @@
-package com.reyzerbit.RPGCore.core.structures;
+package com.reyzerbit.CrownCore.core.structures;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Vector;
 
-public class RPGPlayer {
+public class CrownPlayer {
 	
 	private UUID playerUUID;
 	
-	private Vector<RPGCharacter> playerCharacters;
+	private Vector<CrownCharacter> playerCharacters;
 	
-	private RPGCharacter activeCharacter;
+	private CrownCharacter activeCharacter;
 	
-	public RPGPlayer(UUID uuid) {
+	public CrownPlayer(UUID uuid) {
 		
 		playerUUID = uuid;
 		
-		playerCharacters = new Vector<RPGCharacter>();
+		playerCharacters = new Vector<CrownCharacter>();
 		
 	}
 
-	public void addCharacter(RPGCharacter c) {
+	public void addCharacter(CrownCharacter c) {
 		
 		playerCharacters.add(c);
 		
@@ -31,7 +31,7 @@ public class RPGPlayer {
 		
 		if(getCharacterIDs().contains(id)) {
 			
-			for(RPGCharacter c : getCharacters()) {
+			for(CrownCharacter c : getCharacters()) {
 				
 				if(c.getCharacterID().equals(id)) {
 					
@@ -46,13 +46,13 @@ public class RPGPlayer {
 		
 	}
 	
-	private void setActive(RPGCharacter c) {
+	private void setActive(CrownCharacter c) {
 		
 		activeCharacter = c;
 		
 	}
 	
-	public void removeCharacter(RPGCharacter c) {
+	public void removeCharacter(CrownCharacter c) {
 		
 		playerCharacters.remove(c);
 		
@@ -64,13 +64,13 @@ public class RPGPlayer {
 		
 	}
 	
-	public Vector<RPGCharacter> getCharacters() {
+	public Vector<CrownCharacter> getCharacters() {
 		
 		return playerCharacters;
 		
 	}
 	
-	public RPGCharacter getActiveCharacter() {
+	public CrownCharacter getActiveCharacter() {
 		
 		return activeCharacter;
 		
@@ -80,7 +80,7 @@ public class RPGPlayer {
 		
 		List<String> tempList = new ArrayList<String>();
 		
-		for(RPGCharacter c : playerCharacters) {
+		for(CrownCharacter c : playerCharacters) {
 			
 			tempList.add(c.getCharacterID());
 			
@@ -90,9 +90,9 @@ public class RPGPlayer {
 		
 	}
 	
-	public RPGCharacter getCharacter(String id) {
+	public CrownCharacter getCharacter(String id) {
 		
-		for(RPGCharacter c : playerCharacters) {
+		for(CrownCharacter c : playerCharacters) {
 			
 			if(c.getCharacterID().toLowerCase().equals(id.toLowerCase())) return c;
 			

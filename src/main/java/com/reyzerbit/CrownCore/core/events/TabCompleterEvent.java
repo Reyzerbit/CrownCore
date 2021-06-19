@@ -1,18 +1,15 @@
-package com.reyzerbit.RPGCore.core.events;
+package com.reyzerbit.CrownCore.core.events;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 public class TabCompleterEvent implements TabCompleter {
 	
-	private static final String[] commands = {"create", "delete", "list", "setactive", "view", "reload", "info", 
+	private static final String[] commands = {"create", "delete", "list", "setactive", "view", "viewspecific", "reload", "info", 
 			"setname", "setrace", "setclass", "setage", "setheight", "setbodytype", "sethometown", "setdescription"};
 
 	@Override
@@ -20,9 +17,21 @@ public class TabCompleterEvent implements TabCompleter {
 		
         final List<String> completions = new ArrayList<>();
         
-        StringUtil.copyPartialMatches(args[1], Arrays.asList(commands), completions);
-        
-        Collections.sort(completions);
+        if(args.length == 1) {
+        	
+        	for(String a : commands) {
+        		
+        		if(a.toLowerCase().startsWith(args[0].toLowerCase())) {
+        			
+        			completions.add(a);
+        			
+        		}
+        		
+        	}
+    		
+    		return completions;
+        	
+        }
         
         return completions;
         

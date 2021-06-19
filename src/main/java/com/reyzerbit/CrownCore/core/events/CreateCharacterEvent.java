@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.core.events;
+package com.reyzerbit.CrownCore.core.events;
 
 import java.util.UUID;
 

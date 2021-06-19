@@ -14,8 +14,8 @@ publishing {
         maven(MavenPublication) {
         
             groupId = 'com.reyzerbit'
-            artifactId = 'RPGCore'
-            version = '1.4'
+            artifactId = 'CrownCore'
+            version = '1.6'
 
             from components.java
             

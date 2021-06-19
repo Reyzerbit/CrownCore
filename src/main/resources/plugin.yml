@@ -1,45 +1,45 @@
-name: RPG Core
-main: com.reyzerbit.RPGCore.RPGCore
-version: 1.3
+name: CrownCore
+main: com.reyzerbit.CrownCore.CrownCore
+version: 1.6
 description: This plugin contains core ellements for an RPG style minecraft game.
 api-version: 1.14
 author: Reyzerbit
 website: www.reyzerbit.com
-prefix: RPGCore
+prefix: CrownCore
 softdepend: [Vault]
 commands:
-  rpg:
+  cc:
     description: Basic command for all RPG Core plugin functionality
     aliases: [rpg]
-    permission: rpgcore.rpg
+    permission: crowncore.cc
 permissions:
-  rpgcore.rpg:
+  crowncore.cc:
     default: true
-  rpgcore.create:
+  crowncore.create:
     default: true
-  rpgcore.delete:
+  crowncore.delete:
     default: true
-  rpgcore.list:
+  crowncore.list:
     default: true
-  rpgcore.setactive:
+  crowncore.setactive:
     default: true
-  rpgcore.setvalue:
+  crowncore.setvalue:
     default: true
-  rpgcore.view:
+  crowncore.view:
     default: true
-  rpgcore.viewclick:
+  crowncore.viewclick:
     default: true
-  rpgcore.create.op:
+  crowncore.create.op:
     default: op
-  rpgcore.delete.op:
+  crowncore.delete.op:
     default: op
-  rpgcore.setactive.op:
+  crowncore.setactive.op:
     default: op
-  rpgcore.list.op:
+  crowncore.list.op:
     default: op
-  rpgcore.setvalue.op:
+  crowncore.setvalue.op:
     default: op
-  rpgcore.reload:
+  crowncore.reload:
     default: op
-  rpgcore.info:
+  crowncore.info:
     default: op

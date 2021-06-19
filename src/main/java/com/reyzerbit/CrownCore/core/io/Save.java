@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.core.io;
+package com.reyzerbit.CrownCore.core.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,17 +9,17 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.structures.RPGCharacter;
-import com.reyzerbit.RPGCore.core.structures.RPGPlayer;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
+import com.reyzerbit.CrownCore.core.structures.CrownPlayer;
 
 public class Save {
 
 	public static void save() {
 		
-		for(Map.Entry<UUID, RPGPlayer> entry : RPGCore.playerData.entrySet()) {
+		for(Map.Entry<UUID, CrownPlayer> entry : CrownCore.playerData.entrySet()) {
 			
-			File saveFile = new File(RPGCore.playerDataDir, (entry.getKey().toString() + ".yml"));
+			File saveFile = new File(CrownCore.playerDataDir, (entry.getKey().toString() + ".yml"));
 			
 			if(saveFile.exists()) {
 				
@@ -37,7 +37,7 @@ public class Save {
 			
 			ConfigurationSection charSection = saveConfig.createSection("characters");
 			
-			for(RPGCharacter rpgChar : entry.getValue().getCharacters()) {
+			for(CrownCharacter rpgChar : entry.getValue().getCharacters()) {
 				
 				ConfigurationSection tempCharSection = charSection.createSection(rpgChar.getCharacterID());
 	

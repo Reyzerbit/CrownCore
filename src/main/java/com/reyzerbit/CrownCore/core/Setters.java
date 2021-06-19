@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.core;
+package com.reyzerbit.CrownCore.core;
 
 import java.util.Arrays;
 
@@ -6,11 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.events.SetActiveCharacterEvent;
-import com.reyzerbit.RPGCore.core.io.Save;
-import com.reyzerbit.RPGCore.core.structures.RPGCharacter;
-import com.reyzerbit.RPGCore.core.structures.RPGPlayer;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.events.SetActiveCharacterEvent;
+import com.reyzerbit.CrownCore.core.io.Save;
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
+import com.reyzerbit.CrownCore.core.structures.CrownPlayer;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -30,21 +30,21 @@ public class Setters {
 				
 				sender.sendMessage(ChatColor.GREEN + "Setting your active character to " + args[1]);
 				
-				RPGPlayer rpgP = RPGCore.playerData.get(p.getUniqueId());
+				CrownPlayer rpgP = CrownCore.playerData.get(p.getUniqueId());
 				
 				String oldGroupID = null;
 				
-				if(rpgP.hasActiveCharacter()) oldGroupID = RPGCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group");
+				if(rpgP.hasActiveCharacter()) oldGroupID = CrownCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group");
 				
 				rpgP.setActiveCharacter(args[1]);
 				
-				setClassGroup(p, RPGCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group"), oldGroupID);
+				setClassGroup(p, CrownCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group"), oldGroupID);
 				
 				Save.save();
 				
 			}
 			
-		} else if(args.length == 3 && (sender.hasPermission("rpgcore.setactive.op") || sender.isOp())) {
+		} else if(args.length == 3 && (sender.hasPermission("crowncore.setactive.op") || sender.isOp())) {
 			
 			Player p = Bukkit.getPlayer(args[1]);
 			
@@ -63,15 +63,15 @@ public class Setters {
 				
 				sender.sendMessage(ChatColor.GREEN + "Setting " + args[1] + "'s active character to " + args[2]);
 				
-				RPGPlayer rpgP = RPGCore.playerData.get(p.getUniqueId());
+				CrownPlayer rpgP = CrownCore.playerData.get(p.getUniqueId());
 				
 				String oldGroupID = null;
 				
-				if(rpgP.hasActiveCharacter()) oldGroupID = RPGCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group");
+				if(rpgP.hasActiveCharacter()) oldGroupID = CrownCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group");
 				
 				rpgP.setActiveCharacter(args[1]);
 				
-				setClassGroup(p, RPGCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group"), oldGroupID);
+				setClassGroup(p, CrownCore.config.getString(rpgP.getActiveCharacter().getPClass() + "group"), oldGroupID);
 				
 				p.sendMessage(ChatColor.GREEN + sender.getName() + " set your active character to " + args[2]);
 				
@@ -79,14 +79,14 @@ public class Setters {
 				
 			}
 			
-		} else if (sender.hasPermission("rpgcore.setactive.op") || sender.isOp()) { 
+		} else if (sender.hasPermission("crowncore.setactive.op") || sender.isOp()) { 
 			
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg setactive [Player] [Character ID]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc setactive [Player] [Character ID]");
 		
 		} else {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg setactive [Character ID]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc setactive [Character ID]");
 			
 		}
 		
@@ -98,7 +98,7 @@ public class Setters {
 			
 			Player p = (Player) sender;
 			
-			RPGPlayer tempPlayer = RPGCore.playerData.get(p.getUniqueId());
+			CrownPlayer tempPlayer = CrownCore.playerData.get(p.getUniqueId());
 			
 			if(tempPlayer == null) {
 				
@@ -107,7 +107,7 @@ public class Setters {
 				
 			}
 			
-			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			CrownCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
 			
 			if(tempCharacter == null) {
 				
@@ -151,7 +151,7 @@ public class Setters {
 			
 			Player p = (Player) sender;
 			
-			RPGPlayer tempPlayer = RPGCore.playerData.get(p.getUniqueId());
+			CrownPlayer tempPlayer = CrownCore.playerData.get(p.getUniqueId());
 			
 			if(tempPlayer == null) {
 				
@@ -160,7 +160,7 @@ public class Setters {
 				
 			}
 			
-			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			CrownCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
 			
 			if(tempCharacter == null) {
 				
@@ -174,7 +174,7 @@ public class Setters {
 			Save.save();
 			return true;
 			
-		} else if(args.length == 4 && (sender.isOp() || sender.hasPermission("rpgcore.setvalue.op"))){
+		} else if(args.length == 4 && (sender.isOp() || sender.hasPermission("crowncore.setvalue.op"))){
 			
 			Player p = Bukkit.getPlayer(args[1]);
 			
@@ -185,7 +185,7 @@ public class Setters {
 				
 			}
 			
-			RPGPlayer tempPlayer = RPGCore.playerData.get(p.getUniqueId());
+			CrownPlayer tempPlayer = CrownCore.playerData.get(p.getUniqueId());
 			
 			if(tempPlayer == null) {
 				
@@ -194,7 +194,7 @@ public class Setters {
 				
 			}
 			
-			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			CrownCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
 			
 			if(tempCharacter == null) {
 				
@@ -234,11 +234,11 @@ public class Setters {
 			
 			return true;
 			
-		} else if(args.length > 4 && args[0].toLowerCase().equals("setdescription") && (sender.isOp() || sender.hasPermission("rpgcore.setvalue.op"))){
+		} else if(args.length > 4 && args[0].toLowerCase().equals("setdescription") && (sender.isOp() || sender.hasPermission("crowncore.setvalue.op"))){
 			
 			Player p = Bukkit.getPlayer(args[1]);
 			
-			RPGPlayer tempPlayer = RPGCore.playerData.get(p.getUniqueId());
+			CrownPlayer tempPlayer = CrownCore.playerData.get(p.getUniqueId());
 			
 			if(tempPlayer == null) {
 				
@@ -247,7 +247,7 @@ public class Setters {
 				
 			}
 			
-			RPGCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
+			CrownCharacter tempCharacter = tempPlayer.getCharacter(args[1]);
 			
 			if(tempCharacter == null) {
 				
@@ -261,14 +261,14 @@ public class Setters {
 			Save.save();
 			return true;
 			
-		} else if(sender.isOp() || sender.hasPermission("rpgcore.setvalue.op")){
+		} else if(sender.isOp() || sender.hasPermission("crowncore.setvalue.op")){
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg set[value] [Player] [Character ID] [value]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc set[value] [Player] [Character ID] [value]");
 			return false;
 			
 		} else {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg set[value] [Character ID] [value]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc set[value] [Character ID] [value]");
 			return false;
 			
 		}
@@ -281,11 +281,11 @@ public class Setters {
 		
 		if(!oldGroup.equals("") || oldGroup != null) {
 			
-			RPGCore.perms.playerRemoveGroup(p, oldGroup);
+			CrownCore.perms.playerRemoveGroup(p, oldGroup);
 			
 		}
 		
-		RPGCore.perms.playerAddGroup(p, group);
+		CrownCore.perms.playerAddGroup(p, group);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.reyzerbit.RPGCore.core.io;
+package com.reyzerbit.CrownCore.core.io;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -8,36 +8,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.Conversion;
-import com.reyzerbit.RPGCore.core.structures.RPGCharacter;
-import com.reyzerbit.RPGCore.core.structures.RPGPlayer;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.Conversion;
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
+import com.reyzerbit.CrownCore.core.structures.CrownPlayer;
 
 public class Load {
 
 	public static void load() {
 		
 		//Clears current data
-		if(!RPGCore.playerSavesConfig.isEmpty()) RPGCore.playerSavesConfig.clear();
-		if(!RPGCore.playerData.isEmpty()) RPGCore.playerData.clear();
+		if(!CrownCore.playerSavesConfig.isEmpty()) CrownCore.playerSavesConfig.clear();
+		if(!CrownCore.playerData.isEmpty()) CrownCore.playerData.clear();
 		
-		if(!RPGCore.playerDataDir.exists()) {
+		if(!CrownCore.playerDataDir.exists()) {
 			
-			RPGCore.playerDataDir.mkdirs();
+			CrownCore.playerDataDir.mkdirs();
 			return;
 			
 		}
 		
 		//Warning log
-		Logger log = Bukkit.getLogger();
-		log.log(Level.WARNING, "RPGCore is loading saved data! Either the server is booting up or someone forced a save data reload, WHICH COULD CAUSE YOU TO LOSE DATA!");
+		Bukkit.getLogger().log(Level.WARNING, "[CrownCore] CrownCore is loading saved data! Either the server is booting up or someone forced a save data reload, WHICH COULD CAUSE YOU TO LOSE DATA!");
 		
 		//YAML Filetype filter
 		FilenameFilter filter = new FilenameFilter() {
@@ -52,24 +50,24 @@ public class Load {
 	    };
 	    
 	    //Gets all yaml files in directory playerDataDir
-	   	List<File> playerSaves = Arrays.asList(RPGCore.playerDataDir.listFiles(filter));
+	   	List<File> playerSaves = Arrays.asList(CrownCore.playerDataDir.listFiles(filter));
 	   	
 	   	//Puts all FileConfigurations into playerSavesConfig map
 	   	playerSaves.forEach(f -> {
 				
 			if(f.getName().substring(0, f.getName().length() - 4).length() == 36) {
 		       		
-		       	RPGCore.playerSavesConfig.put(f.getName().substring(0, f.getName().length() - 4), YamlConfiguration.loadConfiguration(f));
+		       	CrownCore.playerSavesConfig.put(f.getName().substring(0, f.getName().length() - 4), YamlConfiguration.loadConfiguration(f));
 	   			
 	   		}
 			
 		});
 	
 	   	//For each pair in playerSavesConfig map
-	   	for(Map.Entry<String, FileConfiguration> entry : RPGCore.playerSavesConfig.entrySet()) {
+	   	for(Map.Entry<String, FileConfiguration> entry : CrownCore.playerSavesConfig.entrySet()) {
 	
 	   		UUID tempUUID = UUID.fromString(entry.getKey());
-	   		RPGPlayer tempPlayer = new RPGPlayer(tempUUID);
+	   		CrownPlayer tempPlayer = new CrownPlayer(tempUUID);
 	   		FileConfiguration tempConfig = entry.getValue();
 	   		
 	   		Set<String> count = tempConfig.getConfigurationSection("characters").getKeys(false);
@@ -81,7 +79,7 @@ public class Load {
 	   			ConfigurationSection tempConfigSec = tempConfig.getConfigurationSection("characters." + s);
 	   			
 	   			//And add new character to tempPlayer based on each character config section's data
-	   			RPGCharacter tempCharacter = new RPGCharacter();
+	   			CrownCharacter tempCharacter = new CrownCharacter();
 	   			
 	   			Conversion.checkNullString(tempConfigSec, "id", tempCharacter, tempConfigSec.getString("id"));
 	   			Conversion.checkNullString(tempConfigSec, "name", tempCharacter, tempConfigSec.getString("name"));
@@ -101,7 +99,7 @@ public class Load {
 	   		tempPlayer.setActiveCharacter(tempConfig.getString("active"));
 	   		
 	   		//Add tempUUID tempPlayer to Main.playerData
-	   		RPGCore.playerData.put(tempUUID, tempPlayer);
+	   		CrownCore.playerData.put(tempUUID, tempPlayer);
 	   		
 	   	}
 		

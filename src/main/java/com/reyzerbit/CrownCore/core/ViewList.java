@@ -1,12 +1,12 @@
-package com.reyzerbit.RPGCore.core;
+package com.reyzerbit.CrownCore.core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.ChatPaginator;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.structures.RPGCharacter;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -16,11 +16,11 @@ public class ViewList {
 		
 		if(args.length == 1) {
 			
-			if(RPGCore.playerData.containsKey(((Player) sender).getUniqueId())) {
+			if(CrownCore.playerData.containsKey(((Player) sender).getUniqueId())) {
 			
 				sender.sendMessage(ChatColor.BLUE + "=========" + ChatColor.AQUA + "Your Characters" + ChatColor.BLUE + "=========");
 				
-				for(RPGCharacter character : RPGCore.playerData.get(((Player) sender).getUniqueId()).getCharacters()) {
+				for(CrownCharacter character : CrownCore.playerData.get(((Player) sender).getUniqueId()).getCharacters()) {
 					
 					sender.spigot().sendMessage(Conversion.convertToClickList(sender.getName(), character.getCharacterID()));
 					
@@ -38,7 +38,7 @@ public class ViewList {
 			
 		} else if((sender.isOp() || sender.hasPermission("rpgcore.list.op")) && args.length == 2) {
 			
-			if(RPGCore.playerData.containsKey((Bukkit.getPlayer(args[1]).getUniqueId()))) {
+			if(CrownCore.playerData.containsKey((Bukkit.getPlayer(args[1]).getUniqueId()))) {
 			
 				if(Bukkit.getPlayer(args[1]) == null) {
 					
@@ -49,7 +49,7 @@ public class ViewList {
 				
 				sender.sendMessage(ChatColor.BLUE + "=========" + ChatColor.AQUA + args[1] + "'s Characters" + ChatColor.BLUE + "=========");
 				
-				for(RPGCharacter character : RPGCore.playerData.get((Bukkit.getPlayer(args[1]).getUniqueId())).getCharacters()) {
+				for(CrownCharacter character : CrownCore.playerData.get((Bukkit.getPlayer(args[1]).getUniqueId())).getCharacters()) {
 					
 					sender.spigot().sendMessage(Conversion.convertToClickList(args[1], character.getCharacterID()));
 					
@@ -74,14 +74,14 @@ public class ViewList {
 				
 			}
 				
-		} else if(sender.isOp() || sender.hasPermission("rpgcore.list.op")) {
+		} else if(sender.isOp() || sender.hasPermission("crowncore.list.op")) {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg list [Player]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc list [Player]");
 			return false;
 			
 		} else {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg list");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc list");
 			return false;
 			
 		}
@@ -96,11 +96,11 @@ public class ViewList {
 			
 			Player p = (Player) sender;
 			
-			RPGCharacter pc;
+			CrownCharacter pc;
 			
-			if(RPGCore.playerData.containsKey(p.getUniqueId())) {
+			if(CrownCore.playerData.containsKey(p.getUniqueId())) {
 				
-				pc = RPGCore.playerData.get(p.getUniqueId()).getActiveCharacter();
+				pc = CrownCore.playerData.get(p.getUniqueId()).getActiveCharacter();
 				
 			} else {
 				
@@ -155,15 +155,15 @@ public class ViewList {
 			
 			Player p = Bukkit.getPlayer(args[1]);
 			
-			RPGCharacter pc = null;
+			CrownCharacter pc = null;
 			
 			if(p != null) {
 				
 				if(characterID.equals("") || characterID == null) {
 					
-					if(RPGCore.playerData.containsKey(p.getUniqueId())) {
+					if(CrownCore.playerData.containsKey(p.getUniqueId())) {
 						
-						pc = RPGCore.playerData.get(p.getUniqueId()).getActiveCharacter();
+						pc = CrownCore.playerData.get(p.getUniqueId()).getActiveCharacter();
 						
 					} else {
 						
@@ -174,9 +174,9 @@ public class ViewList {
 					
 				} else {
 					
-					if(RPGCore.playerData.containsKey(p.getUniqueId())) {
+					if(CrownCore.playerData.containsKey(p.getUniqueId())) {
 						
-						pc = RPGCore.playerData.get(p.getUniqueId()).getCharacter(characterID);
+						pc = CrownCore.playerData.get(p.getUniqueId()).getCharacter(characterID);
 						
 					} else {
 						
@@ -231,7 +231,7 @@ public class ViewList {
 			
 		} else {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /rpg view [Player]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc view [Player]");
 			return false;
 			
 		}

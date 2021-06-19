@@ -1,7 +1,6 @@
-package com.reyzerbit.RPGCore;
+package com.reyzerbit.CrownCore;
 
 import java.io.File;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +12,17 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.reyzerbit.RPGCore.core.Conversion;
-import com.reyzerbit.RPGCore.core.events.RPGCommandEvent;
-import com.reyzerbit.RPGCore.core.io.Load;
-import com.reyzerbit.RPGCore.core.io.Save;
-import com.reyzerbit.RPGCore.core.structures.RPGPlayer;
+import com.reyzerbit.CrownCore.core.Conversion;
+import com.reyzerbit.CrownCore.core.events.PlayerClickInfoListener;
+import com.reyzerbit.CrownCore.core.events.RPGCommandEvent;
+import com.reyzerbit.CrownCore.core.events.TabCompleterEvent;
+import com.reyzerbit.CrownCore.core.io.Load;
+import com.reyzerbit.CrownCore.core.io.Save;
+import com.reyzerbit.CrownCore.core.structures.CrownPlayer;
 
 import net.milkbowl.vault.permission.Permission;
 
-public class RPGCore extends JavaPlugin {
+public class CrownCore extends JavaPlugin {
 	
 	// Used to determine if configuration values are white-listed, black-listed, or neither
 	public enum protectValues {
@@ -41,7 +42,7 @@ public class RPGCore extends JavaPlugin {
 	public static File playerDataDir;
 	
 	//Data
-	public static Map<UUID, RPGPlayer> playerData;
+	public static Map<UUID, CrownPlayer> playerData;
 	
 	public static List<String> races;
 	public static List<String> classes;
@@ -65,14 +66,6 @@ public class RPGCore extends JavaPlugin {
 	public static final String disableMsg = "DISABLED!";
 	public static final String errorMsg = "An internal error has occured!";
 	
-	//SQL
-	public static String sqlName;
-	public static String sqlDatabase;
-	public static String sqlUser;
-	public static String sqlPassword;
-	public static int sqlPort;
-	public static Connection sqlConnection;
-	
 	//Vault API
 	public static Permission perms = null;
 	
@@ -81,7 +74,6 @@ public class RPGCore extends JavaPlugin {
 	
 	
 	/**************************************************************************/
-	
 	
 	// Fired when plugin is first enabled
     @Override
@@ -101,12 +93,12 @@ public class RPGCore extends JavaPlugin {
     	playerDataDir = new File(this.getDataFolder(), "playerdata");
     	
     	//Saves Init
-    	RPGCore.playerSavesConfig = new HashMap<String, FileConfiguration>();
-    	playerData = new HashMap<UUID, RPGPlayer>();
+    	CrownCore.playerSavesConfig = new HashMap<String, FileConfiguration>();
+    	playerData = new HashMap<UUID, CrownPlayer>();
     	
     	if(getServer().getPluginManager().getPlugin("Vault") == null) {
     		
-    		getServer().getLogger().log(Level.SEVERE, "Unable to detect Vault! Disabling RPG Core.");
+    		getServer().getLogger().log(Level.SEVERE, "[CrownCore] Unable to detect Vault! Disabling CrownCore.");
     		getServer().getPluginManager().disablePlugin(this);
     		return;
     		
@@ -116,10 +108,12 @@ public class RPGCore extends JavaPlugin {
     	
 		reload();
 		
-    	this.getCommand("rpg").setExecutor(new RPGCommandEvent());
+    	this.getCommand("cc").setExecutor(new RPGCommandEvent());
+    	
+    	getServer().getPluginManager().registerEvents(new PlayerClickInfoListener(), this);
     	
     	//WIP
-    	//this.getCommand("rpg").setTabCompleter(new TabCompleterRPG());
+    	this.getCommand("cc").setTabCompleter(new TabCompleterEvent());
     	
     }
     
@@ -159,13 +153,6 @@ public class RPGCore extends JavaPlugin {
     	maxAge = config.getInt("max_age");
     	minHeight = config.getInt("min_height");
     	maxHeight = config.getInt("max_height");
-    	
-    	//SQL
-    	sqlName = config.getString("hostname");
-    	sqlDatabase = config.getString("database");
-    	sqlUser = config.getString("username");
-    	sqlPassword = config.getString("password");
-    	sqlPort = config.getInt("port");
     	
     }
     

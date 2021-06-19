@@ -1,6 +1,6 @@
-package com.reyzerbit.RPGCore.core.structures;
+package com.reyzerbit.CrownCore.core.structures;
 
-public class RPGCharacter {
+public class CrownCharacter {
 	
 	private String CharacterID;
 	
@@ -13,7 +13,7 @@ public class RPGCharacter {
 	private String hometown;
 	private String description;
 	
-	public RPGCharacter() {
+	public CrownCharacter() {
 		
 		CharacterID = "";
 		
@@ -28,7 +28,7 @@ public class RPGCharacter {
 		
 	}
 	
-	public RPGCharacter(String id, String n, String r, String c, int a, int h, String bt, String ht) {
+	public CrownCharacter(String id, String n, String r, String c, int a, int h, String bt, String ht) {
 		
 		CharacterID = id;
 		

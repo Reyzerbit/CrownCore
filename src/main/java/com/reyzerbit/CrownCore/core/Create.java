@@ -1,13 +1,13 @@
-package com.reyzerbit.RPGCore.core;
+package com.reyzerbit.CrownCore.core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.events.CreateCharacterEvent;
-import com.reyzerbit.RPGCore.core.io.Save;
-import com.reyzerbit.RPGCore.core.structures.RPGCharacter;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.events.CreateCharacterEvent;
+import com.reyzerbit.CrownCore.core.io.Save;
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -17,7 +17,7 @@ public class Create {
 		
 		
 		//Checks for duplicate ID
-		if(RPGCore.playerData.get(((Player) sender).getUniqueId()).getCharacterIDs().contains(args[1])) {
+		if(CrownCore.playerData.get(((Player) sender).getUniqueId()).getCharacterIDs().contains(args[1])) {
 			
 			sender.sendMessage(ChatColor.RED + "That ID is already in use for one of your characters!");
 			return false;
@@ -87,7 +87,7 @@ public class Create {
 		
 		if(!createCharacterEvent.isCancelled()) {
 			
-			RPGCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(new RPGCharacter(args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), args[7], args[8]));
+			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(new CrownCharacter(args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), args[7], args[8]));
 			
 			Save.save();
 			return true;
@@ -103,7 +103,7 @@ public class Create {
 		
 		
 		//Checks for duplicate ID
-		if(RPGCore.playerData.get(Bukkit.getPlayer(args[1]).getUniqueId()).getCharacterIDs().contains(args[2])) {
+		if(CrownCore.playerData.get(Bukkit.getPlayer(args[1]).getUniqueId()).getCharacterIDs().contains(args[2])) {
 			
 			sender.sendMessage(ChatColor.RED + "That ID is already in use for one of " + args[1] + "'s characters!");
 			return false;
@@ -188,7 +188,7 @@ public class Create {
 				
 			}
 			
-			RPGCore.playerData.get(p.getUniqueId()).addCharacter(new RPGCharacter(args[2], args[3], args[4], args[5], Integer.parseInt(args[6]), Integer.parseInt(args[7]), args[8], args[9]));
+			CrownCore.playerData.get(p.getUniqueId()).addCharacter(new CrownCharacter(args[2], args[3], args[4], args[5], Integer.parseInt(args[6]), Integer.parseInt(args[7]), args[8], args[9]));
 			
 			Save.save();
 			return true;

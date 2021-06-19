@@ -1,17 +1,9 @@
-#    RPG Cards Config File
+#    CrownCore Config File
 #    Developed by Reyzerbit
-#    Commissioned for MasterMetaphor
-#    Version 1.0
+#    Commissioned for "Crowns and Cannons" Minecraft server
 
 # Enable or diable the plugin
 enabled: true
-
-# MySQL Information
-hostname: name
-port: 00000
-database: database
-username: username
-password: password
 
 # RPG Info
 # MAKE SURE THIS INFO IS ALL LOWERCASE! I have tried to prevent casing issues from occuring, but something may still go wrong.

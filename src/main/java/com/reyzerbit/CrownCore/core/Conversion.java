@@ -1,11 +1,11 @@
-package com.reyzerbit.RPGCore.core;
+package com.reyzerbit.CrownCore.core;
 
 import java.util.logging.Level;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import com.reyzerbit.RPGCore.RPGCore;
-import com.reyzerbit.RPGCore.core.structures.RPGCharacter;
+import com.reyzerbit.CrownCore.CrownCore;
+import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -22,7 +22,7 @@ public class Conversion {
 		TextComponent clickableMessage = new TextComponent(clickText);
 		
 		clickableMessage.setColor(ChatColor.AQUA);
-		clickableMessage.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/rpg set" + key + " " + id + " "));
+		clickableMessage.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/cc set" + key + " " + id + " "));
 		clickableMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 				new ComponentBuilder(ChatColor.GREEN + "Click to change " + key + "!").create()));
 		
@@ -33,30 +33,30 @@ public class Conversion {
 		
 	}
 
-	public static RPGCore.protectValues convertConfigEnums(String value) {
+	public static CrownCore.protectValues convertConfigEnums(String value) {
 		
 		if(value.toLowerCase().equals("black")) {
 			
-			return RPGCore.protectValues.BLACK;
+			return CrownCore.protectValues.BLACK;
 			
 		} else if(value.toLowerCase().equals("white")) {
 			
-			return RPGCore.protectValues.WHITE;
+			return CrownCore.protectValues.WHITE;
 			
 		} else if(value.toLowerCase().equals("none")) {
 			
-			return RPGCore.protectValues.NONE;
+			return CrownCore.protectValues.NONE;
 			
 		} else {
 			
-			RPGCore.getPlugin(RPGCore.class).getLogger().log(Level.SEVERE, "Something is wrong with your config! En error occured while reading protected values (whitelist, blacklist, none).");
+			CrownCore.getPlugin(CrownCore.class).getLogger().log(Level.SEVERE, "Something is wrong with your config! En error occured while reading protected values (whitelist, blacklist, none).");
 			return null;
 			
 		}
 		
 	}
 
-	public static void checkNullString(ConfigurationSection cs, String key, RPGCharacter c, String s) {
+	public static void checkNullString(ConfigurationSection cs, String key, CrownCharacter c, String s) {
 		
 		if(cs.getString(key) != null) {
 			
@@ -117,7 +117,7 @@ public class Conversion {
 		
 	}
 
-	public static void checkNullInt(ConfigurationSection cs, String key, RPGCharacter c, int i) {
+	public static void checkNullInt(ConfigurationSection cs, String key, CrownCharacter c, int i) {
 			
 		switch(key) {
 			case "age":
@@ -135,7 +135,7 @@ public class Conversion {
 		TextComponent text = new TextComponent(id);
 		
 		text.setColor(ChatColor.LIGHT_PURPLE);
-		text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/rpg viewspecific " + target + " " + id));
+		text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/cc viewspecific " + target + " " + id));
 		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 				new ComponentBuilder(ChatColor.GREEN + "Click to view " + id).create()));
 		
