@@ -130,16 +130,29 @@ public class Conversion {
 		
 	}
 
-	public static TextComponent convertToClickList(String target, String id) {
+	public static TextComponent convertToClickList(String target, String id, boolean isActive) {
 		
-		TextComponent text = new TextComponent(id);
+		TextComponent clickableText = new TextComponent(id);
 		
-		text.setColor(ChatColor.LIGHT_PURPLE);
-		text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/cc viewspecific " + target + " " + id));
-		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+		clickableText.setColor(ChatColor.LIGHT_PURPLE);
+		clickableText.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/cc viewspecific " + target + " " + id));
+		clickableText.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 				new ComponentBuilder(ChatColor.GREEN + "Click to view " + id).create()));
 		
-		return text;
+		if(isActive) {
+			
+			TextComponent mainText = new TextComponent();
+			
+			mainText.addExtra(clickableText);
+			mainText.addExtra(ChatColor.LIGHT_PURPLE + " (active)");
+			
+			return mainText;
+			
+		} else {
+			
+			return clickableText;
+			
+		}
 		
 	}
 	

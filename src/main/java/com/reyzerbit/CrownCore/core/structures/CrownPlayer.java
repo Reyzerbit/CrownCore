@@ -109,5 +109,13 @@ public class CrownPlayer {
 		return true;
 		
 	}
+	
+	public boolean isActiveCharacter(CrownCharacter c) {
+		
+		if(activeCharacter.equals(c)) return true;
+		
+		return false;
+		
+	}
 
 }

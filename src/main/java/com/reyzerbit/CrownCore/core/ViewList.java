@@ -7,6 +7,7 @@ import org.bukkit.util.ChatPaginator;
 
 import com.reyzerbit.CrownCore.CrownCore;
 import com.reyzerbit.CrownCore.core.structures.CrownCharacter;
+import com.reyzerbit.CrownCore.core.structures.CrownPlayer;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -17,12 +18,14 @@ public class ViewList {
 		if(args.length == 1) {
 			
 			if(CrownCore.playerData.containsKey(((Player) sender).getUniqueId())) {
+				
+				CrownPlayer p = CrownCore.playerData.get(((Player) sender).getUniqueId());
 			
 				sender.sendMessage(ChatColor.BLUE + "=========" + ChatColor.AQUA + "Your Characters" + ChatColor.BLUE + "=========");
 				
 				for(CrownCharacter character : CrownCore.playerData.get(((Player) sender).getUniqueId()).getCharacters()) {
 					
-					sender.spigot().sendMessage(Conversion.convertToClickList(sender.getName(), character.getCharacterID()));
+					sender.spigot().sendMessage(Conversion.convertToClickList(sender.getName(), character.getCharacterID(), p.isActiveCharacter(character)));
 					
 				}
 				
@@ -47,11 +50,13 @@ public class ViewList {
 					
 				}
 				
+				CrownPlayer p = CrownCore.playerData.get(Bukkit.getPlayer(args[1]).getUniqueId());
+				
 				sender.sendMessage(ChatColor.BLUE + "=========" + ChatColor.AQUA + args[1] + "'s Characters" + ChatColor.BLUE + "=========");
 				
 				for(CrownCharacter character : CrownCore.playerData.get((Bukkit.getPlayer(args[1]).getUniqueId())).getCharacters()) {
 					
-					sender.spigot().sendMessage(Conversion.convertToClickList(args[1], character.getCharacterID()));
+					sender.spigot().sendMessage(Conversion.convertToClickList(args[1], character.getCharacterID(), p.isActiveCharacter(character)));
 					
 				}
 				
