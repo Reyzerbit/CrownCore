@@ -28,6 +28,21 @@ public class CrownCharacter {
 		
 	}
 	
+	public CrownCharacter(String id) {
+		
+		CharacterID = id;
+		
+		name = "";
+		race = "";
+		pClass = "";
+		age = 0;
+		height = 0;
+		bodytype = "";
+		hometown = "";
+		description = "";
+		
+	}
+	
 	public CrownCharacter(String id, String n, String r, String c, int a, int h, String bt, String ht) {
 		
 		CharacterID = id;

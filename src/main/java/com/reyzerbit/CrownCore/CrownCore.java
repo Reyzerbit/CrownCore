@@ -78,17 +78,12 @@ public class CrownCore extends JavaPlugin {
 	// Fired when plugin is first enabled
     @Override
     public void onEnable() {
+
+    	//Generate files if missing
+    	saveDefaultConfig();
     	
 		//congif.yml
     	configFile = new File(this.getDataFolder(), "config.yml");
-
-    	//Generate files if missing
-    	if(!configFile.exists()) {
-
-    		saveResource("config.yml", false);
-    		
-    	}
-    	
     	config = this.getConfig();
     	
     	pluginEnabled = config.getBoolean("enabled");

@@ -1,6 +1,6 @@
 name: CrownCore
 main: com.reyzerbit.CrownCore.CrownCore
-version: 1.8
+version: 1.8.1
 description: This plugin contains core ellements for an RPG style minecraft game.
 api-version: 1.14
 author: Reyzerbit

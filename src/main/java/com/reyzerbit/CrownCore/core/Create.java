@@ -15,7 +15,6 @@ public class Create {
 
 	public static boolean createCharacter(CommandSender sender, String[] args) {
 		
-		
 		//Checks for duplicate ID
 		if(CrownCore.playerData.get(((Player) sender).getUniqueId()).getCharacterIDs().contains(args[1])) {
 			
@@ -96,13 +95,12 @@ public class Create {
 			
 		}
 		
-		sender.sendMessage(ChatColor.RED + "Event was cancelled!");
+		sender.sendMessage(ChatColor.RED + "Character creation event was cancelled!");
 		return false;
 		
 	}
 
 	public static boolean createCharacterOp(CommandSender sender, String[] args) {
-		
 		
 		//Checks for duplicate ID
 		if(CrownCore.playerData.get(Bukkit.getPlayer(args[1]).getUniqueId()).getCharacterIDs().contains(args[2])) {
@@ -180,7 +178,7 @@ public class Create {
 		//Adds new character
 		sender.sendMessage(ChatColor.GREEN + "Creating new character for player " + args[1] + " with ID " + args[2]);
 		
-		CrownCharacter cc = new CrownCharacter(args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]), args[7], args[8]);
+		CrownCharacter cc = new CrownCharacter(args[2], args[3], args[4], args[5], Integer.parseInt(args[6]), Integer.parseInt(args[7]), args[8], args[9]);
 		
 		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
 		
@@ -199,9 +197,71 @@ public class Create {
 			
 		}
 		
-		sender.sendMessage(ChatColor.RED + "Event was cancelled!");
+		sender.sendMessage(ChatColor.RED + "Character creation event was cancelled!");
 		return false;
 		
 	}
 
+	public static boolean createEmptyCharacter(CommandSender sender, String[] args) {
+		
+		//Checks for duplicate ID
+		if(CrownCore.playerData.get(((Player) sender).getUniqueId()).getCharacterIDs().contains(args[1])) {
+			
+			sender.sendMessage(ChatColor.RED + "That ID is already in use for one of your characters!");
+			return false;
+			
+		}
+		
+		//Adds new character
+		sender.sendMessage(ChatColor.GREEN + "Creating new character with ID " + args[1]);
+		
+		CrownCharacter cc = new CrownCharacter(args[1]);
+		
+		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
+		
+		if(!createCharacterEvent.isCancelled()) {
+			
+			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(cc);
+			
+			Save.save();
+			return true;
+			
+		}
+		
+		sender.sendMessage(ChatColor.RED + "Character creation event was cancelled!");
+		return false;
+		
+	}
+
+	public static boolean createEmptyCharacterOp(CommandSender sender, String[] args) {
+		
+		//Checks for duplicate ID
+		if(CrownCore.playerData.get(Bukkit.getPlayer(args[1]).getUniqueId()).getCharacterIDs().contains(args[2])) {
+			
+			sender.sendMessage(ChatColor.RED + "That ID is already in use for one of " + args[1] + "'s characters!");
+			return false;
+			
+		}
+		
+		//Adds new character
+		sender.sendMessage(ChatColor.GREEN + "Creating new character for player " + args[1] + " with ID " + args[2]);
+		
+		CrownCharacter cc = new CrownCharacter(args[2]);
+		
+		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[2], cc);
+		
+		if(!createCharacterEvent.isCancelled()) {
+			
+			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(cc);
+			
+			Save.save();
+			return true;
+			
+		}
+		
+		sender.sendMessage(ChatColor.RED + "Character creation event was cancelled!");
+		return false;
+		
+	}
+	
 }

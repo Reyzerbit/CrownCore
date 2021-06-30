@@ -48,16 +48,47 @@ public class Checks {
 				
 			}
 			
+		//If executed correctly for empty character
+		} else if(args.length == 2 && sender instanceof Player && sender.hasPermission("crowncore.create")) {
+			
+			if(CrownCore.playerData.containsKey(((Player) sender).getUniqueId())) {
+				
+				return Create.createEmptyCharacter(sender, args);
+			
+			} else {
+				
+				CrownCore.playerData.put(((Player) sender).getUniqueId(), new CrownPlayer(((Player) sender).getUniqueId()));
+				
+				return Create.createEmptyCharacter(sender, args);
+				
+			}
+			
+		//If executed correctly for empty character by op
+		} else if(args.length == 3 && (sender.isOp() || sender.hasPermission("crowncore.create.op"))) {
+			
+			UUID playerID = Bukkit.getPlayer(args[1]).getUniqueId();
+			
+			if(CrownCore.playerData.containsKey(playerID)) {
+				
+				return Create.createEmptyCharacterOp(sender, args);
+				
+			} else {
+				
+				CrownCore.playerData.put(playerID, new CrownPlayer(playerID));
+				return Create.createEmptyCharacterOp(sender, args);
+				
+			}
+			
 		//If executed incorrectly by op
 		} else if(sender.isOp() || sender.hasPermission("crowncore.create.op")) {
 	
-			sender.sendMessage(ChatColor.RED + "Usage: /cc create [Player] [ID] [Name] [Race] [Class] [Age] [Height] [Bodytype] [Hometown]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc create [Player] [ID] (The following is optional) [Name] [Race] [Class] [Age] [Height] [Bodytype] [Hometown]");
 			return false;
 			
 		//If executed incorrectly by player
 		} else {
 			
-			sender.sendMessage(ChatColor.RED + "Usage: /cc create [ID] [Name] [Race] [Class] [Age] [Height] [Bodytype] [Hometown]");
+			sender.sendMessage(ChatColor.RED + "Usage: /cc create [ID] (The following is optional) [Name] [Race] [Class] [Age] [Height] [Bodytype] [Hometown]");
 			return false;
 				
 		}

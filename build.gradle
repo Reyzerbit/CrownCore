@@ -15,7 +15,7 @@ publishing {
         
             groupId = 'com.reyzerbit'
             artifactId = 'CrownCore'
-            version = '1.8'
+            version = '1.8.1'
 
             from components.java
             
