@@ -86,6 +86,8 @@ public class Create {
 		
 		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
 		
+		Bukkit.getPluginManager().callEvent(createCharacterEvent);
+		
 		if(!createCharacterEvent.isCancelled()) {
 			
 			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(cc);
@@ -182,6 +184,8 @@ public class Create {
 		
 		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
 		
+		Bukkit.getPluginManager().callEvent(createCharacterEvent);
+		
 		if(!createCharacterEvent.isCancelled()) {
 			
 			if(p.isOnline()) {
@@ -219,6 +223,8 @@ public class Create {
 		
 		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[1], cc);
 		
+		Bukkit.getPluginManager().callEvent(createCharacterEvent);
+		
 		if(!createCharacterEvent.isCancelled()) {
 			
 			CrownCore.playerData.get(((Player) sender).getUniqueId()).addCharacter(cc);
@@ -249,6 +255,8 @@ public class Create {
 		CrownCharacter cc = new CrownCharacter(args[2]);
 		
 		CreateCharacterEvent createCharacterEvent = new CreateCharacterEvent(((Player) sender).getUniqueId(), args[2], cc);
+		
+		Bukkit.getPluginManager().callEvent(createCharacterEvent);
 		
 		if(!createCharacterEvent.isCancelled()) {
 			
